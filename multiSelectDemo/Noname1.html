@@ -1,0 +1,28 @@
+<html>
+<head>
+    <link href="multi-select.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="jquery.multi-select.js" type="text/javascript"></script>
+</head>
+<body>
+    <select multiple="multiple" id="mySelect">
+        <option id='111' value='111'>elem 1</option>
+        <option id='222' value='222'>elem 2</option>
+        <option id='333' value='333'>elem 3</option>
+        <option id='444' value='444'>elem 4</option>
+        <option id='555' value='555'>elem 100</option>
+    </select>
+    <button id="log">log</button>
+</body>
+<script>
+    $('#mySelect').multiSelect();
+    $('#mySelect').multiSelect('select', ['222', '333']);//Ä¬ÈÏÑ¡ÖÐ
+
+    $('#log').click(function () {
+        $('.ms-selection').find('.ms-selected').each(function () {
+            console.log($(this).children().attr('id'))
+			console.log($(this).children().text())
+        });
+    });
+</script>
+</html>
