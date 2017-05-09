@@ -1,0 +1,15 @@
+---
+- hosts: all
+  vars:
+    local_war_path: /opt/store/ #local_war_path
+    war_file: gr* gr2* #war_file
+    tomcat: /usr/local/tomcat8/ #remote_tomcat_path
+  tasks:
+  - name: stop tomcat service
+    script: "/etc/ansible/shutdown_tomcat.sh"
+  - name: remove old war file
+    shell: cd {{ tomcat }}webapps&&rm -rf {{ war_file }}
+  - name: copy new war file
+    copy: src={{ local_war_path }} dest={{ tomcat }}webapps/
+  - name: start tomcat service
+    shell: chdir={{ tomcat }}bin/ nohup ./startup.sh &
