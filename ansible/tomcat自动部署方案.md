@@ -19,21 +19,21 @@ Python 、Tomcat、jdk
 129w ansible_ssh_host=192.168.10.129 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass="123456" #host_to_replace
 
 2)example.yaml文件是一个playbook（剧本），该文件里定义了Tomcat的整个部署流程，例如：
----
-- hosts: all
-  vars: #下面的3个变量需要作为参数传过来
-    local_war_path: /opt/store/ #local_war_path 本地war包的路径
-    war_file: gr* gr2* #war_file 要删除的旧war包
-    tomcat: /usr/local/tomcat8/ #remote_tomcat_path 从服务器上Tomcat的路径
-  tasks:
-  - name: stop tomcat service #调用脚本shutdown_tomcat.sh，停止Tomcat服务
-    script: "/etc/ansible/shutdown_tomcat.sh"
-  - name: remove old war file #删除旧的war包及文件夹
-    shell: cd {{ tomcat }}webapps&&rm -rf {{ war_file }}
-  - name: copy new war file #从主服务器拷贝新war包
-    copy: src={{ local_war_path }} dest={{ tomcat }}webapps/
-  - name: start tomcat service #启动Tomcat
-    shell: chdir={{ tomcat }}bin/ nohup ./startup.sh &
+	`---
+	- hosts: all
+	  vars: #下面的3个变量需要作为参数传过来
+	    local_war_path: /opt/store/ #local_war_path 本地war包的路径
+	    war_file: gr* gr2* #war_file 要删除的旧war包
+	    tomcat: /usr/local/tomcat8/ #remote_tomcat_path 从服务器上Tomcat的路径
+	  tasks:
+	  - name: stop tomcat service #调用脚本shutdown_tomcat.sh，停止Tomcat服务
+	    script: "/etc/ansible/shutdown_tomcat.sh"
+	  - name: remove old war file #删除旧的war包及文件夹
+	    shell: cd {{ tomcat }}webapps&&rm -rf {{ war_file }}
+	  - name: copy new war file #从主服务器拷贝新war包
+	    copy: src={{ local_war_path }} dest={{ tomcat }}webapps/
+	  - name: start tomcat service #启动Tomcat
+	    shell: chdir={{ tomcat }}bin/ nohup ./startup.sh &`
 
 
   3.java测试代码：
