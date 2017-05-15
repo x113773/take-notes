@@ -11,3 +11,13 @@
 ### [Hoverdir-Demo](hoverdir)
 ##### HoverDir是一个响应鼠标悬停效果的插件。
 该demo里包含了3个index页面，index.html是精简版的样例
+
+### [Jstree-Demo](jstree)
+##### Jstree是一个树形结构插件。
+
+### [Multi-select-Demo](multi-select-demo)
+##### Multi-select是一个多选下拉列表插件。
+
+### [Redis-Demo](redis-demo)
+##### Redis是一个key-value型的Nosql数据库。
+该demo里包含了一个修改用户密码的功能，通过Jedis对redis进行操作，记录修改密码的链接地址并设置过期时间。当用户点击链接时进行校验。
