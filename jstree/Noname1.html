@@ -36,39 +36,6 @@
             });
         });
         
-var arr1=[1,2,3,9]; var arr2=[3,6,7,22]; var arr3=[1,5,5,0];
-
-var tar=15;
-
-
-var arr_list = [arr1,arr2,arr3];
-
-var cal_arr = function(arr_list,n){
-var len = arr_list.length;
-var temp =0;
-if(n == len+1){
-		for(var i = 0;i < arr_list.length;i++){
-	 cal_arr(arr_list[i],n--); 
-	}	
-}
-else if(n == 0){
-console.log("done");
-}
-else{
-		for(var i = 0;i < 4;i++){
-			temp = temp+arr_list[i];
-			console.log(temp);
-	 cal_arr(arr_list[n-1],n--); 
-	}	
-	
-}
-
-
-}
-	
-
-
-       cal_arr(arr_list,arr_list.length+1);   
     </script>
 </body>
 </html>
