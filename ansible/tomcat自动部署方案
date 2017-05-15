@@ -1,5 +1,5 @@
-##问题：
-##Weblogic/Tomcat 通过JAVA直接远程调用或者调用本地Shell还是通过Ansible来部署新程序 + 启动停止服务 如何管理?需要哪些配置信息?
+问题：
+Weblogic/Tomcat 通过JAVA直接远程调用或者调用本地Shell还是通过Ansible来部署新程序 + 启动停止服务 如何管理?需要哪些配置信息?
 
 采用方案：
 通过Ansible来部署新程序+启动停止服务；
