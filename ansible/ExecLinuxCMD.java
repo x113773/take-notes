@@ -1,4 +1,4 @@
-package com.hp.openplatform.common.util;
+package me.ansel.common.util;
 
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
