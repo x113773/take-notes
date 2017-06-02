@@ -1,0 +1,54 @@
+问题：
+Weblogic/Tomcat 通过JAVA直接远程调用或者调用本地Shell还是通过Ansible来部署新程序 + 启动停止服务 如何管理?需要哪些配置信息?
+
+采用方案：
+通过Ansible来部署新程序+启动停止服务；
+
+具体步骤：
+1.测试准备工作：
+两台Linux服务器：
+主服务器（本系统需要部署该服务器上），需要的软件环境：
+Python 、ansible、jdk
+
+从服务器(灰度测试服务器)，需要的软件环境：
+Python 、Weblogic、jdk
+
+2.配置信息：
+主服务器ansible目录下的hosts文件和example.yaml文件。
+1)hosts文件里面配置从服务器的ip、端口、用户名、密码等信息，例如：
+129w ansible_ssh_host=192.168.10.129 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass="123456" #host_to_replace
+
+2)weblogic.yaml文件是一个playbook（剧本），该文件里定义了Weblogic的整个部署流程，例如：
+---
+- hosts: all
+  tasks:
+  - name: copy war file #拷贝本地war包到从服务器指定目录
+    copy: src={{ local_war_file }} dest={{ war_file_path }}
+  - name: start weblogic service #调用shell脚本，传入指定参数，完成启停服务、部署项目
+    script: "/etc/ansible/start_weblogic.sh {{ user_name }} {{ password }}
+     {{ weblogic_path }} {{ domain_name }} {{ server_name }} {{ admin_url }}
+     {{ war_file_path }} {{ project_name }}"
+
+  3.java测试代码：
+
+/**
+ * 执行Linux命令
+ * @param request
+ */
+
+		@RequestMapping(value = "/test/weblogic", method = RequestMethod.GET)
+	public void testWeblogic(HttpServletRequest request) {
+		String str = "ansible-playbook /etc/ansible/weblogic.yaml --extra-vars \"user_name=weblogic password=1234qwer ";
+		str +="weblogic_path=/home/ansel/Oracle/Middleware/Oracle_Home/ local_war_file=/opt/store/hw.war ";
+		str +="domain_name=base_domain server_name=AdminServer admin_url=iiop://localhost:7001/ ";
+		str +="war_file_path=/home/ansel/Oracle/Middleware/Oracle_Home/user_projects/domains/base_domain/my_dm/ ";
+		str +="project_name=hw\"";
+		
+		String res = ExecLinuxCMD.exec(str).toString();
+		System.out.println("==========获得值=============");
+		System.out.println(res);
+	}
+
+4.测试结果：
+  可实现预期效果：自动化部署，启动停止Weblogic服务。
+
