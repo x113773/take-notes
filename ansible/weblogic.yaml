@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+  - name: copy war file #拷贝本地war包到从服务器指定目录
+    copy: src={{ local_war_file }} dest={{ war_file_path }}
+  - name: start weblogic service #调用shell脚本，传入指定参数，完成启停服务、部署项目
+    script: "/etc/ansible/start_weblogic.sh {{ user_name }} {{ password }}
+     {{ weblogic_path }} {{ domain_name }} {{ server_name }} {{ admin_url }}
+     {{ war_file_path }} {{ project_name }}"
+  
+
+
+
+
